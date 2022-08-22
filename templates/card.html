@@ -1,20 +1,6 @@
 {% extends 'index.html' %}
 
 {% block body %}
-  <!-- <div id="board">
-  <h2>My card</h2>
-  <div id="content">
-    <p> Front: {{ x[0][0] }}</p>
-  </div>
-  <div id="answer">
-    <p>Back: {{ x[0][1] }}</p>
-  </div>
-  <div id="button">
-    <button onclick=""> << Previsous </button>
-    <button onclick="console.log('OPA')"> Next >> </button>
-  </div>
-</div> -->
-
 
 <div id="test" style="text-align: center;" class="card w-75 p-3 mx-auto">
   <div class="card-body">
@@ -23,8 +9,17 @@
     <hr>
     <p class="card-text text-secondary">{{ x[counter][1] }}</p>
     <div class="btn-group" role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-primary btn-danger">F</button>
-      <button type="button" class="btn btn-primary btn-success"><a href="{{ url_for('home') }}">T</a></button>
+      <button type="button" class="btn btn-primary btn-danger ">
+        <a href="{{ url_for('home') }}">
+          <i class="fa-solid fa-thumbs-down text-white"></i>
+        </a>
+      </button>
+      <button type="button" class="btn btn-primary btn-success">
+          <a href="{{ url_for('home') }} ">
+            <i class="fa-solid fa-thumbs-up text-white"></i>
+          </a> 
+
+      </button>
     </div>
   </div>
 </div>

@@ -1,11 +1,24 @@
 {% extends 'index.html' %}
 
 {% block body %}
-  <form class="add" action="/addSql" method="post">
-    <label class="add" for="front">Front</label>
-    <input class="add" type="text" name="front"> <br>
-    <label class="add" for="back">Back</label>
-    <input class="add" type="text" name="back"> <br>
-    <button onclick="console.log('opa')" class="add" type="submit">Save</button>
+  <form class="mx-auto" style="width: 400px;" action="/addSql" method="post">
+    <div class="mb-3">
+      <label for="front" class="form-label">Deck name</label>
+      <input class="form-control" type="text" value="EN-FR" aria-label="readonly input example" disabled readonly>
+    </div>
+    <div class="mb-3">
+      <label for="front" class="form-label">Card text front</label>
+      <input name="front" type="text" class="form-control" required>
+      <div class="form-text">Example: "to-be".</div>
+    </div>
+    <div class="mb-3">
+      <label for="back" class="form-label">Card text back</label>
+      <input name="back" type="text" class="form-control" required>
+      <div class="form-text">Example: "être".</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
   </form>
+
+
 {% endblock %}

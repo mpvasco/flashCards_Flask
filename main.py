@@ -15,10 +15,10 @@ def home():
     cur = mysql.connection.cursor()
     cur.execute('''SELECT front, back FROM flashcards.cards;''')
     rv = cur.fetchall()
-    try:
-      global counter
+    global counter
+    if len(rv) >= counter:
       counter += 1
-    except:
+    else:
       counter = 0
     return render_template('card.html', x=rv, counter=counter)
 
@@ -39,13 +39,17 @@ def addCard():
     cur.execute ("INSERT INTO Cards (front, back, Deck_ID) VALUES (%s, %s, %s)", (front, back, 1))
     mysql.connection.commit()
     cur.close()
-    return redirect('/allCards')
+    # return redirect('/allCards')
+    return render_template('addCard.html')  
   return render_template('index.html')
 
 @app.route("/allCards") #OK lista todos os itens
 def getAllCards():
     cur = mysql.connection.cursor()
-    cur.execute('''SELECT front, back FROM flashcards.cards;''')
+    cur.execute('''SELECT Cards.Card_ID as 'cardID', front, back,  Decks.name as 'deckName', Cards.Deck_ID as 'deckID'
+    FROM Cards
+    INNER JOIN Decks
+    ON Cards.Deck_ID = Decks.Deck_ID;''')
     rv = cur.fetchall()
     return render_template('allCards.html', x=rv)
 
