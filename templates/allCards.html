@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block body %}
+      <div>
+        {% for i in x %}
+        <p> Front: {{ i[0] }}</p>
+        <p> Back: {{ i[1] }}</p>
+        <br> <hr>
+        {% endfor %}
+      </div>
+    
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'index.html' %}
+
+{% block body %}
+  <form class="add" action="/addSql" method="post">
+    <label class="add" for="front">Front</label>
+    <input class="add" type="text" name="front"> <br>
+    <label class="add" for="back">Back</label>
+    <input class="add" type="text" name="back"> <br>
+    <button onclick="console.log('opa')" class="add" type="submit">Save</button>
+  </form>
+{% endblock %}
