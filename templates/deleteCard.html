@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+  <h1 class="text-center">DELETE CARD</h1>
+
+  <form class="mx-auto" style="width: 400px;" action='/allCards/delete/{{ x[0][0] }}' method="POST">
+    <div class="mb-3">
+      <label for="front" class="form-label">Deck name</label>
+      <input class="form-control" type="text" value="EN-FR" aria-label="readonly input example" disabled readonly>
+    </div>
+    <div class="mb-3">
+      <label for="front" class="form-label">Card text front</label>
+      <input name="front" type="text" class="form-control" value="{{ x[0][1] }}" required disabled readonly>
+      
+    </div>
+    <div class="mb-3">
+      <label for="back" class="form-label">Card text back</label>
+      <input name="back" type="text" class="form-control" value="{{ x[0][2] }}" required disabled readonly>
+      
+    </div>
+
+    <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+
+  {% endblock %}

@@ -8,19 +8,28 @@ app.config["MYSQL_USER"] = "root"
 app.config["MYSQL_PASSWORD"] = "12345"
 app.config["MYSQL_DB"] = "flashCards"
 
-counter = -1
+counter = 0
 
 @app.route("/") #OK home
 def home():
     cur = mysql.connection.cursor()
     cur.execute('''SELECT front, back FROM flashcards.cards;''')
     rv = cur.fetchall()
-    global counter
-    if len(rv) >= counter:
-      counter += 1
-    else:
-      counter = 0
-    return render_template('card.html', x=rv, counter=counter)
+    print(rv)
+    cur.execute('''SELECT * FROM flashcards.decks;''')
+    rv2 = cur.fetchall()
+    print(rv2)
+    return render_template('card.html', x=rv, y=rv2, counter=0)
+# def home():
+#     cur = mysql.connection.cursor()
+#     cur.execute('''SELECT front, back FROM flashcards.cards;''')
+#     rv = cur.fetchall()
+#     global counter
+#     if len(rv) >= counter:
+#       counter += 1
+#     else:
+#       counter = 0
+#     return render_template('card.html', x=rv, counter=counter)
 
 
 @app.route("/formAddCard") #mostrar formulário de add card
@@ -54,5 +63,45 @@ def getAllCards():
     return render_template('allCards.html', x=rv)
 
 
+@app.route('/allCards/edit/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cards where Card_ID = "+ str(id) +";")
+    resultValue= cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    if request.method=='GET':
+      return render_template('editCard.html', x=resultValue )
+    if request.method=='POST':
+      front = request.form['front']
+      back = request.form['back']
+      cur = mysql.connection.cursor()
+      query = "UPDATE cards SET front = %s, back = %s  WHERE Card_ID = %s;"
+      cur.execute(query, (front, back, id))
+      resultValue= cur.fetchall()
+      mysql.connection.commit()
+      cur.close()
+    return redirect('/allCards')
+
+
+@app.route('/allCards/delete/<int:id>', methods=['GET', 'POST'])
+def delete(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT * FROM cards where Card_ID = "+ str(id) +";")
+    resultValue= cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    if request.method=='GET':
+      return render_template('deleteCard.html', x=resultValue )
+
+    if request.method=='POST':
+      cur = mysql.connection.cursor()
+      query = "DELETE FROM cards WHERE Card_ID = %s;"
+      # cur.execute(query, str(id))
+      cur.execute(query, (id,))
+      resultValue= cur.fetchall()
+      mysql.connection.commit()
+      cur.close()
+    return redirect('/allCards')
 if __name__ == '__main__':
   app.run(debug=True)

@@ -2,8 +2,34 @@
 
 {% block body %}
 
+<div style="text-align: center;">
+
+  <h2>Deck Settings</h2>
+  <form class="row g-3 w-50 p-3 mx-auto">
+    
+    <div class="col-md-6">
+      <label for="inputState" class="form-label">Select a deck</label>
+      <select id="inputState" class="form-select">
+        <option selected>Choose...</option>
+        {% for i in y %}
+        <option>{{i[1]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 w-50">
+      <label for="inputZip" class="form-label text-white">Start</label> <br>
+      <button id="start" type="submit" class="btn btn-primary w-50">Start</button>
+    </div>
+
+
+  </form> 
+
+</div>
+
 <div id="test" style="text-align: center;" class="card w-75 p-3 mx-auto">
   <div class="card-body">
+    <p class="text-secondary text-end">1/10</p>
     <h5 class="card-title">EN-FR</h5>
     <p class="card-text">{{ x[counter][0] }}</p>
     <hr>
